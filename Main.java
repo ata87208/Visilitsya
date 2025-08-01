@@ -1,0 +1,239 @@
+import java.util.Scanner;
+import java.util.Random;
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        String[] words = {"яблоко", "банан", "вишня", "груша", "апельсин", "лимон", "манго", "киви", "ананас", "арбуз", "дыня", "клубника", "малина", "черника", "смородина", "виноград", "персик", "абрикос", "слива", "гранат", "помидор", "огурец", "морковь", "картофель", "лук", "чеснок", "перец", "баклажан", "кабачок", "тыква", "капуста", "свёкла", "редис", "горох", "фасоль", "кукуруза", "собака", "кошка", "лошадь", "корова", "тигр", "лев", "слон", "жираф", "зебра", "медведь", "волк", "лиса", "заяц", "белка", "ёж", "олень", "крокодил", "черепаха", "змея", "лягушка", "воробей", "голубь", "ворона", "орёл", "сова", "попугай", "лебедь", "утка", "курица", "петух", "павлин", "фламинго", "пингвин", "аист", "журавль", "компьютер", "телефон", "планшет", "телевизор", "холодильник", "микроволновка", "пылесос", "стиральная машина", "фен", "наушники", "камера", "принтер", "роутер", "чайник", "вентилятор", "автомобиль", "автобус", "поезд", "самолёт", "корабль", "велосипед", "мотоцикл", "трамвай", "метро", "такси", "грузовик", "вертолёт", "лодка", "скутер", "лес", "река", "гора", "озеро", "море", "океан", "поле", "пустыня", "водопад", "солнце", "луна", "звезда", "облако", "дождь", "снег", "ветер", "гроза", "радуга"};
+        Random random = new Random();
+
+        int randomIndex = random.nextInt(words.length);
+        String word = words[randomIndex].toLowerCase();
+
+
+
+
+        char[] letters = word.toCharArray();
+
+        char[] mask = new char[letters.length];
+        for (int i = 0; i < mask.length; i++) {
+            mask[i] = '*';
+        }
+        for (int i = 0; i < letters.length; i++) {
+            if (letters[i] == ' ') {
+                mask[i] = ' ';
+            }
+        }
+
+        System.out.println("маска:" + new String(mask));
+        int pop = 11;
+        String alfavit = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+        char[] al=alfavit.toCharArray();
+        char[] alph = alfavit.toCharArray();
+        boolean oreh=false;
+        StringBuilder usedLetters = new StringBuilder();
+
+
+
+
+        while (!oreh) {
+
+
+            System.out.println("Буквы,которые не были использованы:" + new String(alph));
+            System.out.print("Введите букву:");
+            char guess = scanner.nextLine().toLowerCase().charAt(0);
+
+
+
+            if (usedLetters.toString().indexOf(guess) != -1) {
+                System.out.println("Эта буква уже была введена! Повторите попытку.");
+                continue;
+            }
+            usedLetters.append(guess);
+
+
+
+
+            boolean found = false;
+
+            boolean rus=false;
+            for (int i = 0; i < al.length; i++) {
+                if (al[i] == guess) {
+                    rus = true;
+                    break;
+                }
+            }
+            if (!rus) {
+                System.out.println("Пожалуйста, введите данные на русском языке");
+                continue;
+            }
+
+
+
+
+
+
+
+
+
+
+
+            for (int i = 0; i < alph.length; i++) {
+                if (alph[i] == guess) {
+                    alph[i] = ' ';
+                    break;
+                }
+            }
+
+
+
+
+            for (int i = 0; i < letters.length; i++) {
+                if (letters[i] == guess) {
+                    mask[i] = guess;
+                    found = true;
+                }
+            }
+
+
+
+
+            if (!found) {
+                pop -= 1;
+                System.out.println("Такой буквы нет! ");
+                System.out.println("У вас осталсоь " + pop + "попыток");
+                Draw(pop);
+
+            }
+
+            System.out.println("Текущая маска:" + new String(mask));
+
+            if (!new String(mask).contains("*")) {
+                System.out.println("Поздравляю!!! Вы угадали слово!!! ");
+                oreh=true;
+            }
+            if (pop == 0) {
+                System.out.println("Вы проиграли! Загаданное слово:"+word+" До следующей игры! ");
+                oreh=true;
+
+            }
+
+
+
+        }
+    }
+
+
+
+    public static void Draw(int pop){
+        switch (pop) {
+            case 10:
+                System.out.println("""
+                |
+                |
+                |
+             ___|_____
+                """);
+                break;
+
+            case 9:
+                System.out.println("""
+              --|-------
+                |
+                |
+             ___|_____
+                """);
+                break;
+
+            case 8:
+                System.out.println("""
+               -|-------
+                |/
+                |
+             ___|_____
+                """);
+                break;
+
+            case 7:
+                System.out.println("""
+              --|-------|
+                |/
+                |
+             ___|_____
+                """);
+                break;
+
+            case 6:
+                System.out.println("""
+                --|-------|
+                |/        ()
+                |
+             ___|_____
+                """);
+                break;
+
+            case 5:
+                System.out.println("""
+              --|-------|
+                |/      ()
+                |       []
+             ___|_____
+                """);
+                break;
+
+            case 4:
+                System.out.println("""
+              --|-------|
+                |/      ()
+                |       []\\
+             ___|_____
+                """);
+                break;
+
+            case 3:
+                System.out.println("""
+                        ---|-------|
+                           |/      ()
+                           |      /[]\\
+                        ___|_____              
+                """);
+                break;
+
+            case 2:
+                System.out.println("""
+                               ---|-------|
+                                   |/      ()
+                                   |      /[_]\\
+                                ___|_____   
+                        
+               
+                            
+                """);
+                break;
+
+            case 1:
+                System.out.println("""
+                                          ---|-------|
+                                             |/      ()
+                                             |      /[_]\\
+                                          ___|_____  / 
+                """);
+                break;
+
+            case 0:
+                System.out.println("""
+                                                  ---|-------|
+                                                     |/      ()
+                                                     |      /[_]\\
+                                                  ___|_____  / \\
+                """);
+            default:
+        }}
+}
+
+
+
+
+
+
+
